@@ -60,12 +60,11 @@ def preprocess_data(train_path='train.csv', test_path='test.csv'):
         train[col] = train[col].map(quality_map)
         test[col] = test[col].map(quality_map)
 
-    # Кодуємо всі інші текстові категоріальні змінні в даммі-перемінні
+  
     cat_cols = train.select_dtypes(include=['object']).columns
     train = pd.get_dummies(train, columns=cat_cols)
     test = pd.get_dummies(test, columns=cat_cols)
 
-    # Вирівнюємо колонки train і test
     train, test = train.align(test, join='left', axis=1, fill_value=0)
 
     return train, test
